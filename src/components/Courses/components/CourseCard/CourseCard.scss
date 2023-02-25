@@ -1,0 +1,39 @@
+@import '../../../../styles/mixins.scss';
+
+.course-card {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid green;
+  padding: 10px;
+  margin-bottom: 20px;
+
+  @include element(additional-info) {
+    margin: 0 20px 0 50px;
+    min-width: 350px;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @include element(additional-info-content) {
+    display: flex;
+    flex-direction: column;
+    & span {
+      margin-bottom: 5px;
+    }
+  }
+
+  @include element(additional-info-button) {
+    height: 30px;
+    width: 130px;
+    background-color: white;
+    border: 1px solid purple;
+    align-self: center;
+  }
+
+  @include element(authors) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
