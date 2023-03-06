@@ -7,6 +7,10 @@
   padding: 10px;
   margin-bottom: 20px;
 
+  @include element(title-section) {
+    width: 100%;
+  }
+
   @include element(additional-info) {
     margin: 0 20px 0 50px;
     min-width: 350px;

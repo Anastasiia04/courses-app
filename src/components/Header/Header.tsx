@@ -14,7 +14,6 @@ export function Header() {
 				<Button
 					className='user-bar__button'
 					buttonText='Logout'
-					buttonType='button'
 					onClick={logout}
 				/>
 			</div>

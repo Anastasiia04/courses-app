@@ -11,11 +11,14 @@ function App() {
 	const onAddNewCourse = () => {
 		setIsCreateCourse(true);
 	};
+	const onCreateNewCourse = () => {
+		setIsCreateCourse(false);
+	};
 	return (
 		<div className='App'>
 			<Header />
 			{isCreateCourse ? (
-				<CreateCourse />
+				<CreateCourse createNewCourse={onCreateNewCourse} />
 			) : (
 				<Courses addNewCourse={onAddNewCourse} />
 			)}

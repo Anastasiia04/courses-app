@@ -1,83 +1,72 @@
 import { Formik } from 'formik';
-import React from 'react';
-import { Button } from '../../common/Button/Button';
-import { Input } from '../../common/Input/Input';
-import { getFormattedDuration } from '../../helpers/pipeDuration';
+import * as Yup from 'yup';
+import { ICourse } from '../../models/Course';
+import { v4 as uuidv4 } from 'uuid';
 
-export function CreateCourse() {
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	const onSubmit = () => {};
+import {
+	CreateCourseForm,
+	ICreateCourseFormValues,
+} from './components/CreateCourseForm/CreateCourseForm';
+
+import './CreateCourse.scss';
+import { mockedCoursesList } from '../../constants';
+import React from 'react';
+
+const CreateCourseFormSchema = Yup.object().shape({
+	titleInput: Yup.string()
+		.min(2, 'Title should contain at least 2 symbols!')
+		.required('Title field is required!'),
+	description: Yup.string()
+		.min(2, 'Descripion should contain at least 2 symbols!')
+		.required('Description field is required!'),
+	duration: Yup.number()
+		.min(1, 'Duration should be more than 0!')
+		.required('Duration field is required!'),
+	authors: Yup.array()
+		.of(
+			Yup.object().shape({
+				name: Yup.string().required(),
+				id: Yup.string().required(),
+			})
+		)
+		.min(1, 'Course authors list should contain at least one author!'),
+});
+
+const init: ICreateCourseFormValues = {
+	titleInput: '',
+	description: '',
+	duration: '0',
+	authors: [],
+};
+
+interface ICreateCourseProps {
+	createNewCourse: () => void;
+}
+
+export function CreateCourse({ createNewCourse }: ICreateCourseProps) {
+	const onSubmit = (inputCourse: ICreateCourseFormValues) => {
+		console.log(inputCourse);
+		const course: ICourse = {
+			id: uuidv4(),
+			creationDate: new Date().toLocaleDateString('en-US'),
+			title: inputCourse.titleInput,
+			description: inputCourse.description,
+			duration: parseInt(inputCourse.duration),
+			authors: inputCourse.authors.map((author) => {
+				return author.id;
+			}),
+		};
+		mockedCoursesList.push(course);
+		createNewCourse();
+	};
+
 	return (
-		<>
-			<Formik initialValues={{}} onSubmit={onSubmit}>
-				{(props) => (
-					<form className='search-bar-wrapper' onSubmit={props.handleSubmit}>
-						<section>
-							<div>
-								<Input
-									name='titleInput'
-									labelText='Title'
-									placeholdetText='Enter title...'
-								/>
-								<Button buttonText='Create course' buttonType='submit' />
-								<div>
-									<label>Deacription</label>
-									<textarea placeholder='Enter description'></textarea>
-								</div>
-							</div>
-						</section>
-						<section>
-							<div>
-								<div>
-									<h5>Add author</h5>
-									<Input
-										name='authorName'
-										labelText='Author name'
-										placeholdetText='Enter author name...'
-									/>
-									<Button buttonText='Create author' buttonType='button' />
-								</div>
-								<div>
-									<h5>Duration</h5>
-									<Input
-										name='duration'
-										labelText='Duration'
-										placeholdetText='Enter durstion in minutes...'
-									/>
-									<p>Duration: {getFormattedDuration(60)}</p>
-								</div>
-							</div>
-							<div>
-								<div>
-									<h5>Authors</h5>
-									<div>
-										<div>
-											<span>Name....</span>{' '}
-											<Button buttonText='Add author' buttonType='button' />
-										</div>
-										<div>
-											<span>Name....</span>{' '}
-											<Button buttonText='Add author' buttonType='button' />
-										</div>
-										<div>
-											<span>Name....</span>{' '}
-											<Button buttonText='Add author' buttonType='button' />
-										</div>
-										<div>
-											<span>Name....</span>{' '}
-											<Button buttonText='Add author' buttonType='button' />
-										</div>
-									</div>
-								</div>
-								<div>
-									<h5>Course authors</h5>
-									<div>Author list is empty</div>
-								</div>
-							</div>
-						</section>
-					</form>
-				)}
-			</Formik>
-		</>
+		<Formik
+			initialValues={init}
+			onSubmit={onSubmit}
+			validationSchema={CreateCourseFormSchema}
+		>
+			{(props) => <CreateCourseForm {...props} />}
+		</Formik>
 	);
 }

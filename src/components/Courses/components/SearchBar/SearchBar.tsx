@@ -3,14 +3,17 @@ import React from 'react';
 import { Button } from '../../../../common/Button/Button';
 import { Input } from '../../../../common/Input/Input';
 import './SearchBar.scss';
-
 interface ISearchBarProps {
 	search: (value: string) => void;
 }
 
+interface formValue {
+	searchInput: string;
+}
+
 export function SearchBar({ search }: ISearchBarProps) {
-	const onSubmit = (values: any) => {
-		search(values.searchInput);
+	const onSubmit = ({ searchInput }: formValue) => {
+		search(searchInput);
 	};
 	return (
 		<Formik initialValues={{ searchInput: '' }} onSubmit={onSubmit}>
@@ -22,11 +25,7 @@ export function SearchBar({ search }: ISearchBarProps) {
 						placeholdetText='Enter course name...'
 						className='search-bar-wrapper__input'
 					/>
-					<Button
-						className='search-bar-wrapper__button'
-						buttonText='Search'
-						buttonType='submit'
-					/>
+					<Button className='search-bar-wrapper__button' buttonText='Search' />
 				</form>
 			)}
 		</Formik>

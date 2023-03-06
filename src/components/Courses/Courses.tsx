@@ -34,7 +34,6 @@ export function Courses({ addNewCourse }: ICoursesProps) {
 				<Button
 					className='search-bar__button'
 					buttonText='Add new course'
-					buttonType='button'
 					onClick={addNewCourse}
 				/>
 			</nav>

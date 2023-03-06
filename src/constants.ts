@@ -40,3 +40,21 @@ export const mockedAuthorsList = [
 		name: 'Valentina Larina',
 	},
 ];
+
+export const CREATE_COURSE_TITLE_LABEL_TEXT = 'Title';
+export const CREATE_COURSE_TITLE_PLACEHOLDER_TEXT = 'Enter title...';
+export const CREATE_COURSE_BUTTON_TEXT = 'Create course';
+export const CREATE_COURSE_DESCRIPTION_LABEL_TEXT = 'Description';
+export const CREATE_COURSE_DESCRIPTION_PLACEHOLDER_TEXT = 'Enter description';
+export const CREATE_COURSE_ADD_AUTHOR_TITLE = 'Add author';
+export const CREATE_COURSE_ADD_AUTHOR_LABEL_TEXT = 'Author name';
+export const CREATE_COURSE_ADD_AUTHOR_PLACEHOLDER_TEXT = 'Enter author name...';
+export const CREATE_AUTHOR_BUTTON_TEXT = 'Create author';
+export const CREATE_COURSE_DURATION_TITLE = 'Duration';
+export const CREATE_COURSE_DURATION_PLACEHOLDER_TEXT =
+	'Enter durstion in minutes...';
+export const CREATE_COURSE_AUTHORS_LIST_TITLE = 'Authors';
+export const ADD_AUTHOR_BUTTON_TEXT = 'Add author';
+export const COURSE_AUTHORS_LIST_TITLE = 'Course authors';
+export const COURSE_AUTHORS_LIST_IS_EMPTY = 'Author list is empty';
+export const DELETE_AUTHOR_BUTTON_TEXT = 'Delete author';
