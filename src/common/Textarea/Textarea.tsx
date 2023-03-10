@@ -11,8 +11,8 @@ interface ITextareaProps {
 export function Textarea({
 	name,
 	labelText,
-	placeholdetText,
 	className,
+	...props
 }: ITextareaProps) {
 	const [field] = useField<string>(name);
 	const { value, onChange } = field;
@@ -28,7 +28,7 @@ export function Textarea({
 				id={name}
 				name={name}
 				value={value}
-				placeholder={placeholdetText}
+				{...props}
 				onChange={handleChange}
 			></textarea>
 		</div>

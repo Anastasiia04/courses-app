@@ -9,11 +9,11 @@ interface IInputProps {
 }
 
 export function Input({
+	type = 'text',
 	name,
 	labelText,
-	placeholdetText,
 	className,
-	type = 'text',
+	...props
 }: IInputProps) {
 	const [field] = useField(name);
 	const { value, onChange } = field;
@@ -29,7 +29,7 @@ export function Input({
 				id={name}
 				name={name}
 				value={value}
-				placeholder={placeholdetText}
+				{...props}
 				onChange={handleChange}
 			></input>{' '}
 		</div>

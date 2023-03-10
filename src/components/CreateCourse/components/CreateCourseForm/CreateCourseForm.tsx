@@ -57,7 +57,11 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 		onCourseAuthorsChange({ target: { value: authors, name: 'authors' } });
 	};
 
-	const createAuthor = (values: any) => {
+	interface IAuthorInput {
+		authorName: string;
+	}
+
+	const createAuthor = (values: IAuthorInput) => {
 		if (!values.authorName) return;
 
 		const author: IAuthor = {
@@ -131,34 +135,37 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 							onSubmit={(values) => createAuthor(values)}
 							validationSchema={AuthorNameValidationSchema}
 						>
-							{(authorProps) => (
-								<>
-									<div>
-										<Input
-											name='authorName'
-											className='course-additional-info__input'
-											labelText={CREATE_COURSE_ADD_AUTHOR_LABEL_TEXT}
-											placeholdetText={
-												CREATE_COURSE_ADD_AUTHOR_PLACEHOLDER_TEXT
-											}
-											type='text'
+							{(authorProps) => {
+								const handleCreateAuthor = () => {
+									if (authorProps.getFieldMeta('authorName').error) return;
+									createAuthor(authorProps.values);
+								};
+								return (
+									<>
+										<div>
+											<Input
+												name='authorName'
+												className='course-additional-info__input'
+												labelText={CREATE_COURSE_ADD_AUTHOR_LABEL_TEXT}
+												placeholdetText={
+													CREATE_COURSE_ADD_AUTHOR_PLACEHOLDER_TEXT
+												}
+												type='text'
+											/>
+											{authorProps.getFieldMeta('authorName').error ? (
+												<div className='error'>
+													{authorProps.getFieldMeta('authorName').error}
+												</div>
+											) : null}
+										</div>
+										<Button
+											className='course-additional-info__button'
+											buttonText={CREATE_AUTHOR_BUTTON_TEXT}
+											onClick={handleCreateAuthor}
 										/>
-										{authorProps.getFieldMeta('authorName').error ? (
-											<div className='error'>
-												{authorProps.getFieldMeta('authorName').error}
-											</div>
-										) : null}
-									</div>
-									<Button
-										className='course-additional-info__button'
-										buttonText={CREATE_AUTHOR_BUTTON_TEXT}
-										onClick={() => {
-											if (authorProps.getFieldMeta('authorName').error) return;
-											createAuthor(authorProps.values);
-										}}
-									/>
-								</>
-							)}
+									</>
+								);
+							}}
 						</Formik>
 					</div>
 					<div className='course-additional-info__author-list'>
@@ -206,10 +213,10 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 					</div>
 					<div className='course-additional-info__author-list'>
 						<h3>{COURSE_AUTHORS_LIST_TITLE}</h3>
-						{courseAuthors.length > 0 ? (
-							courseAuthors.map((a, index) => (
+						{courseAuthors.length ? (
+							courseAuthors.map((a, id) => (
 								<div
-									key={index}
+									key={id}
 									className='course-additional-info__author-list-item'
 								>
 									<span>{a.name}</span>

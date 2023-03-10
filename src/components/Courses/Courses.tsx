@@ -1,6 +1,4 @@
-import React from 'react';
-// eslint-disable-next-line no-duplicate-imports
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '../../common/Button/Button';
 import { mockedCoursesList } from '../../constants';
 import { ICourse } from '../../models/Course';
@@ -22,7 +20,7 @@ export function Courses({ addNewCourse }: ICoursesProps) {
 		}
 		const findedCourses = mockedCoursesList.filter(
 			(course) =>
-				course.id.toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+				course.id.toLowerCase().includes(value.toLowerCase()) ||
 				course.title.toLowerCase().indexOf(value.toLowerCase()) > -1
 		);
 		setCourses(findedCourses);
