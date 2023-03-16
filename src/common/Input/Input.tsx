@@ -15,7 +15,7 @@ export function Input({
 	className,
 	...props
 }: IInputProps) {
-	const [field] = useField(name);
+	const [field, meta] = useField(name);
 	const { value, onChange } = field;
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		onChange({ target: { value: event.target.value, name } });
@@ -31,7 +31,10 @@ export function Input({
 				value={value}
 				{...props}
 				onChange={handleChange}
-			></input>{' '}
+			></input>
+			{meta.touched && meta.error ? (
+				<div className='error'>{meta.error}</div>
+			) : null}
 		</div>
 	);
 }

@@ -25,7 +25,11 @@ export function SearchBar({ search }: ISearchBarProps) {
 						placeholdetText='Enter course name...'
 						className='search-bar-wrapper__input'
 					/>
-					<Button className='search-bar-wrapper__button' buttonText='Search' />
+					<Button
+						className='search-bar-wrapper__button'
+						buttonText='Search'
+						buttonType='submit'
+					/>
 				</form>
 			)}
 		</Formik>

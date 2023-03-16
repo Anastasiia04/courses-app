@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../common/Button/Button';
-import { mockedCoursesList } from '../../constants';
+import {
+	ADD_NEW_COURSE_BUTTON_TEXT,
+	mockedCoursesList,
+	ROUTES,
+} from '../../constants';
 import { ICourse } from '../../models/Course';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import './Courses.scss';
 
-interface ICoursesProps {
-	addNewCourse: () => void;
-}
-
-export function Courses({ addNewCourse }: ICoursesProps) {
+export function Courses() {
 	const [courses, setCourses] = useState<Array<ICourse>>(mockedCoursesList);
 
 	const onSearch = (value: string) => {
@@ -25,6 +26,7 @@ export function Courses({ addNewCourse }: ICoursesProps) {
 		);
 		setCourses(findedCourses);
 	};
+	const navigate = useNavigate();
 	return (
 		<section className='courses'>
 			<nav className='search-bar'>
@@ -32,19 +34,15 @@ export function Courses({ addNewCourse }: ICoursesProps) {
 				<Button
 					className='search-bar__button'
 					buttonText='Add new course'
-					onClick={addNewCourse}
+					buttonType='button'
+					onClick={() => {
+						navigate(ROUTES.addCourse);
+					}}
 				/>
 			</nav>
 			<main>
 				{courses.map((course) => (
-					<CourseCard
-						key={course.id}
-						title={course.title}
-						description={course.description}
-						duration={course.duration}
-						authors={course.authors}
-						creationDate={course.creationDate}
-					/>
+					<CourseCard key={course.id} course={course} />
 				))}
 			</main>
 		</section>
