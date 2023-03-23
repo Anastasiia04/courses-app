@@ -33,7 +33,10 @@ function App() {
 						<Routes>
 							{userContext.user.token ? (
 								<>
-									<Route path='/' element={<Navigate to={ROUTES.courses} />} />
+									<Route
+										path={ROUTES.default}
+										element={<Navigate to={ROUTES.courses} />}
+									/>
 									<Route path={ROUTES.courses} element={<Courses />} />
 									<Route path={ROUTES.course} element={<CourseInfo />} />
 									<Route path={ROUTES.addCourse} element={<CreateCourse />} />

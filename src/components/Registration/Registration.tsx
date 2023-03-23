@@ -10,12 +10,13 @@ import { makeRequest } from '../../helpers/makeRequest';
 
 import './Registration.scss';
 
-interface IRegistrationData {
+export interface IRegistrationData {
 	name: string;
 	email: string;
 	password: string;
 }
-interface IRegistrationResponse {
+
+export interface IRegistrationResponse {
 	successful: boolean;
 	errors: Array<string>;
 }

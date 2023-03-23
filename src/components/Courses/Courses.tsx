@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../common/Button/Button';
 import {
 	ADD_NEW_COURSE_BUTTON_TEXT,
@@ -31,14 +31,9 @@ export function Courses() {
 		<section className='courses'>
 			<nav className='search-bar'>
 				<SearchBar search={onSearch} />
-				<Button
-					className='search-bar__button'
-					buttonText='Add new course'
-					buttonType='button'
-					onClick={() => {
-						navigate(ROUTES.addCourse);
-					}}
-				/>
+				<Link className='search-bar__button' to={ROUTES.addCourse}>
+					{ADD_NEW_COURSE_BUTTON_TEXT}
+				</Link>
 			</nav>
 			<main>
 				{courses.map((course) => (
