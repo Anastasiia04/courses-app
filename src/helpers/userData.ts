@@ -2,22 +2,19 @@ import { USER_INFO } from '../constants';
 
 export interface IUser {
 	name: string;
+	isAuth: boolean;
+	email: string;
 	token: string;
 }
 
-export function getUserData(): IUser {
-	const name = localStorage.getItem(USER_INFO.name);
-	const token = localStorage.getItem(USER_INFO.token);
-	if (name && token) return { name, token };
-	return { name: '', token: '' };
-}
-
-export function putUserData(user: IUser) {
-	localStorage.setItem(USER_INFO.name, user.name);
+export function putUserToken(user: IUser) {
 	localStorage.setItem(USER_INFO.token, user.token);
 }
 
-export function clearUserData() {
-	localStorage.removeItem(USER_INFO.name);
+export function clearUserToken() {
 	localStorage.removeItem(USER_INFO.token);
+}
+
+export function getUserToken(): string | null {
+	return localStorage.getItem(USER_INFO.token);
 }
