@@ -49,7 +49,7 @@ export function Courses() {
 				<h1>Loading...</h1>
 			) : (
 				<main>
-					{courses ? (
+					{courses?.length ? (
 						courses.map((course) => (
 							<CourseCard key={course.id} course={course} />
 						))

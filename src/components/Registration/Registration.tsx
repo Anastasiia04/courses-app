@@ -39,6 +39,16 @@ const RegistrationFormSchema = Yup.object().shape({
 		.required('Password field is required!'),
 });
 
+function createOptions(body: any) {
+	return {
+		method: 'POST',
+		body: JSON.stringify(body),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	};
+}
+
 export function Registration() {
 	const [errors, setErrors] = useState<Array<string>>([]);
 	const navigate = useNavigate();
@@ -50,19 +60,12 @@ export function Registration() {
 			password,
 			email,
 		};
-		const options = {
-			method: 'POST',
-			body: JSON.stringify(newUser),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		};
+		const options = createOptions(newUser);
 
 		const response = await makeRequest<IRegistrationResponse>(
 			REGISTRATION_URL,
 			options
 		);
-		console.log(response);
 		if (response.successful) {
 			navigate(ROUTES.login);
 		} else {
@@ -72,13 +75,12 @@ export function Registration() {
 	return (
 		<section className='registration-wrapper'>
 			<h1>Registration</h1>
-			{errors?.length > 0
-				? errors.map((error, index) => (
-						<div key={index} className='error'>
-							{error}
-						</div>
-				  ))
-				: null}
+			{errors.length &&
+				errors.map((error, index) => (
+					<div key={index} className='error'>
+						{error}
+					</div>
+				))}
 			<Formik
 				initialValues={registrationFormInitState}
 				onSubmit={onSubmit}
@@ -104,11 +106,7 @@ export function Registration() {
 							placeholdetText='Enter password'
 							className='registration__input'
 						></Input>
-						<Button
-							buttonText='Registration'
-							buttonType='submit'
-							className='registration__button'
-						></Button>
+						<Button className='registration__button'>Registration</Button>
 					</form>
 				)}
 			</Formik>

@@ -1,13 +1,11 @@
 import React from 'react';
 // eslint-disable-next-line no-duplicate-imports
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { useAuthors } from 'src/hooks/useAuthors';
-import { selectAuthors } from 'src/store/authors/authorsSelector';
-import { selectCourses } from 'src/store/courses/coursesSelector';
+import { selectAuthors } from '../../store/authors/authorsSelector';
+import { selectCourses } from '../../store/courses/coursesSelector';
 
-import { mockedCoursesList, ROUTES } from '../../constants';
+import { ROUTES } from '../../constants';
 import { getAuthors } from '../../helpers/authors';
 import { getFormattedDate } from '../../helpers/dateGenerator';
 import { getFormattedDuration } from '../../helpers/pipeDuration';
@@ -29,8 +27,6 @@ export function CourseInfo() {
 	const courses = useSelector(selectCourses);
 	const authors = useSelector(selectAuthors);
 	const course = courses.find((c) => c.id === courseId) || defauldCourse;
-	console.log(courses, authors, course);
-	useAuthors();
 	return (
 		<div className='course-info'>
 			<header className='course-info__back'>

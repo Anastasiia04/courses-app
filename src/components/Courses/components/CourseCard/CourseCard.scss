@@ -38,21 +38,18 @@
   }
 
   @include element(edit-button) {
-    background-image: url(../../../../assets/pencil.png);
-    background-repeat: no-repeat;
-    background-size: 20px;
-    background-position: center;
-    width: 30px;
-    height: 30px;
-    border: 1px solid purple;
+    svg {
+      width: 30px;
+      height: 30px;
+      border: 1px solid purple;
+    }
   }
 
   @include element(delete-button) {
-    background-image: url(../../../../assets/bin.png);
-    background-repeat: no-repeat;
-    background-size: 20px;
-    background-position: center;
-    width: 30px;
+    svg {
+      width: 30px;
+      height: 30px;
+    }
   }
 
   @include element(authors) {

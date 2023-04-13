@@ -16,7 +16,7 @@ export const useAuthors = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (authors) {
+		if (authors?.length) {
 			dispatch(authorsLoaded(authors));
 		} else {
 			makeRequest<IAuthorsResponse>(AUTHORS_URL).then((resp) => {

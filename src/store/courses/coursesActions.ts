@@ -1,8 +1,12 @@
 import { ICourse } from '../../models/Course';
 import { createActionFactory } from '../actionFactory';
 
+export const COURSES_LOADED = 'courses_loaded';
+
 export const coursesLoaded =
-	createActionFactory('courses_loaded')<Array<ICourse>>();
+	createActionFactory(COURSES_LOADED)<Array<ICourse>>();
+
+// Rest of the code remains the same
 export const courseAdded = createActionFactory('course_added')<ICourse>();
 export const courseDeleted = createActionFactory('course_deleted')<string>();
 export const courseUpdated = createActionFactory('course_updated')<ICourse>();

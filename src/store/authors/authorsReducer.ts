@@ -16,10 +16,10 @@ export function authorsReducer(
 	switch (action.type) {
 		case authorsLoaded.type:
 			return action.payload;
-		case authorAdded.type:
-			// eslint-disable-next-line no-case-declarations
+		case authorAdded.type: {
 			const nonEmptyState = state || [];
 			return [action.payload, ...nonEmptyState];
+		}
 		case authorDeleted.type:
 			if (!state || !action.payload) {
 				return state;

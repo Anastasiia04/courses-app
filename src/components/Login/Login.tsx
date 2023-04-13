@@ -38,6 +38,16 @@ const LoginFormSchema = Yup.object().shape({
 	password: Yup.string().required('Password field is required!'),
 });
 
+function createLoginOptions(body: any) {
+	return {
+		method: 'POST',
+		body: JSON.stringify(body),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	};
+}
+
 export function Login() {
 	const [errors, setErrors] = useState<Array<string>>([]);
 
@@ -47,13 +57,7 @@ export function Login() {
 	const onSubmit = async (values: ILoginData) => {
 		const { email, password } = values;
 		const user = { email, password };
-		const options = {
-			method: 'POST',
-			body: JSON.stringify(user),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		};
+		const options = createLoginOptions(user);
 
 		const response = await makeRequest<ILoginResponse>(LOGIN_URL, options);
 
@@ -78,20 +82,19 @@ export function Login() {
 	return (
 		<section className='login-wrapper'>
 			<h1>Login</h1>
-			{errors?.length > 0
-				? errors.map((error, index) => (
-						<div key={index} className='error'>
-							{error}
-						</div>
-				  ))
-				: null}
+			{errors &&
+				errors.map((error, index) => (
+					<div key={index} className='error'>
+						{error}
+					</div>
+				))}
 			<Formik
 				initialValues={loginFormInitState}
 				onSubmit={onSubmit}
 				validationSchema={LoginFormSchema}
 			>
-				{(props) => (
-					<form onSubmit={props.handleSubmit} className='login'>
+				{({ handleSubmit }) => (
+					<form onSubmit={handleSubmit} className='login'>
 						<Input
 							name='email'
 							labelText='Email'
@@ -105,11 +108,7 @@ export function Login() {
 							className='login__input'
 							type='password'
 						></Input>
-						<Button
-							buttonText='Login'
-							buttonType='submit'
-							className='login__button'
-						></Button>
+						<Button className='login__button'>Login</Button>
 					</form>
 				)}
 			</Formik>

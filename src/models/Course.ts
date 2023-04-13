@@ -7,6 +7,7 @@ export interface ICourse {
 	authors: Array<string>;
 }
 export interface IUpdatedCourse {
+	id: string;
 	title: string;
 	description: string;
 	duration: number;

@@ -27,14 +27,15 @@ export function Header() {
 			{user ? (
 				<div className='user-bar'>
 					<div className='user-bar__username'>{user.name}</div>
-					<Button
-						className='user-bar__button'
-						buttonText={LOGOUT_BUTTON_TEXT}
-						buttonType='button'
-						onClick={logoutHandler}
-					/>
+					<Button className='user-bar__button' onClick={logoutHandler}>
+						{LOGOUT_BUTTON_TEXT}
+					</Button>
 				</div>
-			) : null}
+			) : (
+				<div className='user-bar__login-message'>
+					Please log in to access your account.
+				</div>
+			)}
 		</header>
 	);
 }

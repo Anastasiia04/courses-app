@@ -1,8 +1,8 @@
 import { Formik, FormikProps, useField } from 'formik';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAuthors } from 'src/hooks/useAuthors';
-import { authorAdded } from 'src/store/authors/authorsActions';
+import { useAuthors } from '../../../../hooks/useAuthors';
+import { authorAdded } from '../../../../store/authors/authorsActions';
 import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
 
@@ -48,7 +48,6 @@ const AuthorNameValidationSchema = Yup.object().shape({
 });
 
 export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
-	useAuthors();
 	const dispatch = useDispatch();
 	const authors = useSelector(selectAuthors);
 	const [authorsField] = useField<Array<IAuthor>>('authors');
@@ -102,10 +101,7 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 								type='text'
 							/>
 						</div>
-						<Button
-							buttonText={CREATE_COURSE_BUTTON_TEXT}
-							buttonType='submit'
-						/>
+						<Button />
 					</div>
 					<div>
 						<Textarea
@@ -153,8 +149,6 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 										</div>
 										<Button
 											className='course-additional-info__button'
-											buttonText={CREATE_AUTHOR_BUTTON_TEXT}
-											buttonType='button'
 											onClick={handleCreateAuthor}
 										/>
 									</>
@@ -165,18 +159,14 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 					<div className='course-additional-info__author-list'>
 						<h3>{CREATE_COURSE_AUTHORS_LIST_TITLE}</h3>
 						<div>
-							{authors ? (
+							{authors && authors.length ? (
 								authors.map((author) => (
 									<div
 										key={author.id}
 										className='course-additional-info__author-list-item'
 									>
 										<span>{author.name}</span>
-										<Button
-											buttonText={ADD_AUTHOR_BUTTON_TEXT}
-											buttonType='button'
-											onClick={() => addAuhorToCourseAuthors(author)}
-										/>
+										<Button onClick={() => addAuhorToCourseAuthors(author)} />
 									</div>
 								))
 							) : (
@@ -213,11 +203,9 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 									className='course-additional-info__author-list-item'
 								>
 									<span>{a.name}</span>
-									<Button
-										buttonText={DELETE_AUTHOR_BUTTON_TEXT}
-										buttonType='button'
-										onClick={() => removeAuhorFromCourseAuthors(a)}
-									/>
+									<Button onClick={() => removeAuhorFromCourseAuthors(a)}>
+										DELETE_AUTHOR_BUTTON_TEXT
+									</Button>
 								</div>
 							))
 						) : (
