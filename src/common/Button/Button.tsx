@@ -1,11 +1,10 @@
-import React, { MouseEvent } from 'react';
-interface IButtonProps {
-	buttonText: string;
-	type?: 'button' | 'submit' | 'reset';
+import React, { MouseEvent, ButtonHTMLAttributes } from 'react';
+
+interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	className?: string;
-	onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const Button = ({ buttonText, ...props }: IButtonProps) => (
-	<button {...props}> {buttonText}</button>
-);
+export const Button = ({ className, ...props }: IButtonProps) => {
+	const style = `general-button ${className}`;
+	return <button {...props} className={style} />;
+};

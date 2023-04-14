@@ -1,13 +1,13 @@
-import { mockedAuthorsList } from '../constants';
+import { IAuthor } from '../models/Author';
 
-export const getAuthors = (authors: Array<string>): string => {
-	const authorsList: Array<string> = [];
-	authors.forEach((authorId) => {
-		const name = mockedAuthorsList.find(
-			(author) => author.id === authorId
-		)?.name;
-		if (name) authorsList.push(name);
-	});
-	authorsList.join(', ');
-	return authorsList.join(', ');
+export const getAuthors = (
+	authorsIds: Array<string>,
+	authorsList: Array<IAuthor> | null
+): string => {
+	const authorsResultList: Array<string | undefined> = authorsIds.map(
+		(authorId) => {
+			return authorsList?.find((author) => author.id === authorId)?.name;
+		}
+	);
+	return authorsResultList.join(', ');
 };

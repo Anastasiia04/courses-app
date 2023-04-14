@@ -1,6 +1,13 @@
 import React from 'react';
-import courses from '../../../../assets/courses.png';
+import { Link } from 'react-router-dom';
+
+import { ROUTES } from '../../../../constants';
+import { ReactComponent as LogoIcon } from 'src/assets/icons/graduation-cap-svgrepo-com.svg';
 
 import './Logo.scss';
 
-export const Logo = () => <img className='logo' src={courses} />;
+export const Logo = () => (
+	<Link to={ROUTES.default}>
+		<LogoIcon />
+	</Link>
+);

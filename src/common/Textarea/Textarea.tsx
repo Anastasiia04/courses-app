@@ -14,7 +14,7 @@ export function Textarea({
 	className,
 	...props
 }: ITextareaProps) {
-	const [field] = useField<string>(name);
+	const [field, meta] = useField<string>(name);
 	const { value, onChange } = field;
 
 	const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -31,6 +31,9 @@ export function Textarea({
 				{...props}
 				onChange={handleChange}
 			></textarea>
+			{meta.touched && meta.error ? (
+				<div className='error'>{meta.error}</div>
+			) : null}
 		</div>
 	);
 }

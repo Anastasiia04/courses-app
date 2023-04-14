@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { ICourse } from '../../models/Course';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 import {
 	CreateCourseForm,
@@ -9,8 +10,10 @@ import {
 } from './components/CreateCourseForm/CreateCourseForm';
 
 import './CreateCourse.scss';
-import { mockedCoursesList } from '../../constants';
+import { ROUTES } from '../../constants';
 import React from 'react';
+import { courseAdded } from 'src/store/courses/coursesActions';
+import { useDispatch } from 'react-redux';
 
 const CreateCourseFormSchema = Yup.object().shape({
 	titleInput: Yup.string()
@@ -39,13 +42,10 @@ const init: ICreateCourseFormValues = {
 	authors: [],
 };
 
-interface ICreateCourseProps {
-	createNewCourse: () => void;
-}
-
-export function CreateCourse({ createNewCourse }: ICreateCourseProps) {
+export function CreateCourse() {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const onSubmit = (inputCourse: ICreateCourseFormValues) => {
-		console.log(inputCourse);
 		const course: ICourse = {
 			id: uuidv4(),
 			creationDate: new Date().toLocaleDateString('en-US'),
@@ -56,8 +56,8 @@ export function CreateCourse({ createNewCourse }: ICreateCourseProps) {
 				return author.id;
 			}),
 		};
-		mockedCoursesList.push(course);
-		createNewCourse();
+		dispatch(courseAdded(course));
+		navigate(ROUTES.courses);
 	};
 
 	return (

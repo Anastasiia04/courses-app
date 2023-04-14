@@ -1,22 +1,41 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { Button } from '../../common/Button/Button';
 import { Logo } from './components/Logo/Logo';
+import { LOGOUT_BUTTON_TEXT, ROUTES } from '../../constants';
+
 import './Header.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from 'src/store/user/userActions';
+import { selectUser } from 'src/store/user/userSelector';
+import { clearUserToken } from '../../helpers/userData';
 
 export function Header() {
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	const logout = () => {};
+	const user = useSelector(selectUser);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const logoutHandler = () => {
+		dispatch(logout(user));
+		clearUserToken();
+		navigate(ROUTES.login);
+	};
 	return (
 		<header className='header'>
 			<Logo />
-			<div className='user-bar'>
-				<div className='user-bar__username'>User name</div>
-				<Button
-					className='user-bar__button'
-					buttonText='Logout'
-					onClick={logout}
-				/>
-			</div>
+			{user ? (
+				<div className='user-bar'>
+					<div className='user-bar__username'>{user.name}</div>
+					<Button className='user-bar__button' onClick={logoutHandler}>
+						{LOGOUT_BUTTON_TEXT}
+					</Button>
+				</div>
+			) : (
+				<div className='user-bar__login-message'>
+					Please log in to access your account.
+				</div>
+			)}
 		</header>
 	);
 }

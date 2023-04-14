@@ -28,11 +28,28 @@
   }
 
   @include element(additional-info-button) {
-    height: 30px;
-    width: 130px;
-    background-color: white;
-    border: 1px solid purple;
     align-self: center;
+  }
+
+  @include element(buttons-wrapper) {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  @include element(edit-button) {
+    svg {
+      width: 30px;
+      height: 30px;
+      border: 1px solid purple;
+    }
+  }
+
+  @include element(delete-button) {
+    svg {
+      width: 30px;
+      height: 30px;
+    }
   }
 
   @include element(authors) {
