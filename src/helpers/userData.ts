@@ -1,14 +1,20 @@
 import { USER_INFO } from '../constants';
 
+export enum UserRole {
+	admin = 'admin',
+	user = 'user',
+}
+
 export interface IUser {
 	name: string;
 	isAuth: boolean;
 	email: string;
 	token: string;
+	role: UserRole;
 }
 
-export function putUserToken(user: IUser) {
-	localStorage.setItem(USER_INFO.token, user.token);
+export function putUserToken(token: string) {
+	localStorage.setItem(USER_INFO.token, token);
 }
 
 export function clearUserToken() {

@@ -69,6 +69,9 @@ export const COURSES_URL = API_HOST + '/courses/all';
 export const USER = API_HOST + '/users/me';
 export const AUTHORS_URL = API_HOST + '/authors/all';
 export const COURSE_URL = (id: string) => `${API_HOST}/courses/${id}`;
+export const LOGOUT_URL = API_HOST + '/logout';
+export const CREATE_COURSE_URL = API_HOST + '/courses/add';
+export const CREATE_AUTHOR_URL = API_HOST + '/authors/add';
 
 export const ROUTES = {
 	default: '/',

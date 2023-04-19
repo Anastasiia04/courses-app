@@ -9,16 +9,21 @@ import { ICourse } from '../../models/Course';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import './Courses.scss';
+import { selectUser } from '../../store/user/userSelector';
+import { useAuthors } from '../../hooks/useAuthors';
+import { UserRole } from '../../helpers/userData';
 
 export function Courses() {
+	useAuthors();
 	const loading = useCourses();
 	const navigate = useNavigate();
 	const storeCourses = useSelector(selectCourses);
+	const user = useSelector(selectUser);
 	const [courses, setCourses] = useState<Array<ICourse> | null>(storeCourses);
 
 	useEffect(() => {
 		setCourses(storeCourses);
-	}, [storeCourses]);
+	}, [storeCourses, user]);
 
 	function onSearch(value: string) {
 		if (!value) {
@@ -41,9 +46,16 @@ export function Courses() {
 		<section className='courses'>
 			<nav className='search-bar'>
 				<SearchBar search={onSearch} />
-				<Link className='search-bar__button' to={ROUTES.addCourse}>
-					{ADD_NEW_COURSE_BUTTON_TEXT}
-				</Link>
+				{user?.role === UserRole.admin ? (
+					<Button
+						className='search-bar__button'
+						onClick={() => {
+							navigate(ROUTES.addCourse);
+						}}
+					>
+						{ADD_NEW_COURSE_BUTTON_TEXT}
+					</Button>
+				) : null}
 			</nav>
 			{loading ? (
 				<h1>Loading...</h1>

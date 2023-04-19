@@ -13,6 +13,9 @@ import { useAuthors } from '../../../../hooks/useAuthors';
 import { selectAuthors } from '../../../../store/authors/authorsSelector';
 import { courseDeleted } from '../../../../store/courses/coursesActions';
 import './CourseCard.scss';
+import { selectUser } from '../../../../store/user/userSelector';
+import { deleteCourse } from '../../../../store/courses/thunk';
+import { UserRole } from '../../../../helpers/userData';
 
 interface ICourseProps {
 	course: ICourse;
@@ -22,10 +25,11 @@ export function CourseCard({ course }: ICourseProps) {
 	useAuthors();
 	const navigate = useNavigate();
 	const authors = useSelector(selectAuthors);
+	const user = useSelector(selectUser);
 	const dispatch = useDispatch();
 
-	const deleteCourse = (id: string) => {
-		dispatch(courseDeleted(id));
+	const deleteCourseHandler = (id: string) => {
+		deleteCourse(id)(dispatch);
 	};
 	const { title, description } = course;
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -62,26 +66,27 @@ export function CourseCard({ course }: ICourseProps) {
 					>
 						{SHOW_COURSE_BUTTON_TEXT}
 					</Button>
-					<Button
-						className='course-card__edit-button'
-						onClick={() => {
-							const path = generatePath(ROUTES.updateCourse, {
-								courseId: course.id,
-							});
-							navigate(path);
-						}}
-					>
-						<EditIcon aria-label='Edit' />
-					</Button>
 
-					<Button
-						className='course-card__delete-button'
-						onClick={() => {
-							deleteCourse(course.id);
-						}}
-					>
-						<DeleteIcon aria-label='Delete' />
-					</Button>
+					{user?.role === UserRole.admin ? (
+						<>
+							<Link
+								className='course-card__edit-button'
+								to={generatePath(ROUTES.updateCourse, {
+									courseId: course.id,
+								})}
+							>
+								<EditIcon aria-label='Edit' />
+							</Link>
+							<Button
+								className='course-card__delete-button'
+								onClick={() => {
+									deleteCourseHandler(course.id);
+								}}
+							>
+								<DeleteIcon aria-label='Delete' />
+							</Button>
+						</>
+					) : null}
 				</div>
 			</section>
 		</div>

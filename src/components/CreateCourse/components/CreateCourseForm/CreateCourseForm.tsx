@@ -10,6 +10,7 @@ import { Button } from '../../../../common/Button/Button';
 import { Input } from '../../../../common/Input/Input';
 import { Textarea } from '../../../../common/Textarea/Textarea';
 import { selectAuthors } from '../../../../store/authors/authorsSelector';
+import { addAuthor } from '../../../../store/authors/thunk';
 
 import {
 	ADD_AUTHOR_BUTTON_TEXT,
@@ -68,11 +69,7 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 	const createAuthor = (values: IAuthorInput) => {
 		if (!values.authorName) return;
 
-		const author: IAuthor = {
-			id: uuidv4(),
-			name: values.authorName,
-		};
-		dispatch(authorAdded(author));
+		addAuthor(values.authorName)(dispatch);
 	};
 
 	const addAuhorToCourseAuthors = (author: IAuthor) => {

@@ -6,6 +6,7 @@ import {
 	CoursesActions,
 	coursesLoaded,
 	courseUpdated,
+	setSingleCourse,
 } from './coursesActions';
 
 export type CoursesState = Array<ICourse> | null;
@@ -44,6 +45,18 @@ export function coursesReducer(
 				action.payload,
 				...state.slice(courseIndex + 1),
 			];
+		default:
+			return state;
+	}
+}
+
+export function singleCourse(
+	state: ICourse | null = null,
+	action: CoursesActions
+): ICourse | null {
+	switch (action.type) {
+		case setSingleCourse.type:
+			return action.payload;
 		default:
 			return state;
 	}
