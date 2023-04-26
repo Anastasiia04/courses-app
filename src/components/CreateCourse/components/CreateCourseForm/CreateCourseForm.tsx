@@ -86,7 +86,11 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 	};
 
 	return (
-		<form className='create-course-form' onSubmit={props.handleSubmit}>
+		<form
+			className='create-course-form'
+			onSubmit={props.handleSubmit}
+			data-testid='courseForm'
+		>
 			<section>
 				<div>
 					<div className='title'>
@@ -160,6 +164,7 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 								authors.map((author) => (
 									<div
 										key={author.id}
+										data-testid='authors'
 										className='course-additional-info__author-list-item'
 									>
 										<span>{author.name}</span>
@@ -197,6 +202,7 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 							courseAuthors.map((a, id) => (
 								<div
 									key={id}
+									data-testid='courseAuthors'
 									className='course-additional-info__author-list-item'
 								>
 									<span>{a.name}</span>
@@ -206,7 +212,9 @@ export function CreateCourseForm(props: FormikProps<ICreateCourseFormValues>) {
 								</div>
 							))
 						) : (
-							<div>{COURSE_AUTHORS_LIST_IS_EMPTY}</div>
+							<div data-testid='noCourseAuthors'>
+								{COURSE_AUTHORS_LIST_IS_EMPTY}
+							</div>
 						)}
 						{props.getFieldMeta('authors').error ? (
 							<div className='error'>{props.getFieldMeta('authors').error}</div>
