@@ -8,6 +8,6 @@ import './Logo.scss';
 
 export const Logo = () => (
 	<Link to={ROUTES.default}>
-		<LogoIcon />
+		<LogoIcon data-testid='logo' />
 	</Link>
 );

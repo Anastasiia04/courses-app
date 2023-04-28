@@ -34,24 +34,30 @@ export function CourseCard({ course }: ICourseProps) {
 	const { title, description } = course;
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	return (
-		<div className='course-card'>
+		<div className='course-card' data-testid='courseCard'>
 			<section className='course-card__title-section'>
-				<h2>{title}</h2>
-				<p>{description}</p>
+				<h2 data-testid='title'>{title}</h2>
+				<p data-testid='description'>{description}</p>
 			</section>
 			<section className='course-card__additional-info'>
 				<div className='course-card__additional-info-content'>
 					<span className='course-card__authors'>
 						<b>Authors: </b>
-						{getAuthors(course.authors, authors)}
+						<span data-testid='authors'>
+							{getAuthors(course.authors, authors)}
+						</span>
 					</span>
 					<span>
 						<b>Duration: </b>
-						{getFormattedDuration(course.duration)}
+						<span data-testid='duration'>
+							{getFormattedDuration(course.duration)}
+						</span>
 					</span>
 					<span>
 						<b>Created: </b>
-						{getFormattedDate(course.creationDate)}
+						<span data-testid='creationDate'>
+							{getFormattedDate(course.creationDate)}
+						</span>
 					</span>
 				</div>
 				<div className='course-card__buttons-wrapper'>

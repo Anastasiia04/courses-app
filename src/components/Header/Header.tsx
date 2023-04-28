@@ -27,7 +27,9 @@ export function Header() {
 			<Logo />
 			{user ? (
 				<div className='user-bar'>
-					<div className='user-bar__username'>{user.name}</div>
+					<div className='user-bar__username' data-testid='username'>
+						{user.name}
+					</div>
 					<Button className='user-bar__button' onClick={logoutHandler}>
 						{LOGOUT_BUTTON_TEXT}
 					</Button>

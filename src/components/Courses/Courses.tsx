@@ -66,7 +66,7 @@ export function Courses() {
 							<CourseCard key={course.id} course={course} />
 						))
 					) : (
-						<h1>No active courses found</h1>
+						<h1 data-testid='noCourses'>No active courses found</h1>
 					)}
 				</main>
 			)}
