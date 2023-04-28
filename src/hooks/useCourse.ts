@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ICreateCourseFormValues } from '../components/CreateCourse/components/CreateCourseForm/CreateCourseForm';
+import { ICreateCourseFormValues } from 'src/components/CreateCourse/components/CreateCourseForm/CreateCourseForm';
 import { COURSE_URL } from '../constants';
 import { makeRequest } from '../helpers/makeRequest';
 import { getUserToken } from '../helpers/userData';
-import { ICourse, IUpdatedCourse } from '../models/Course';
+import { ICourse } from '../models/Course';
 import { selectAuthors } from '../store/authors/authorsSelector';
 interface ICourseResponse {
 	successful: boolean;
@@ -52,21 +52,4 @@ export const useCourse = (courseId?: string) => {
 	}, [courseId]);
 
 	return { loading, course };
-};
-
-export const updateCourse = (course: IUpdatedCourse, id?: string) => {
-	const token = getUserToken();
-	if (token && id) {
-		return {
-			type: updateCourse,
-			payload: makeRequest<ICourseResponse>(COURSE_URL(id), {
-				method: 'PUT',
-				headers: {
-					Authorization: token || '',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(course),
-			}),
-		};
-	}
 };

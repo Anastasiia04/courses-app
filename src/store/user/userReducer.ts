@@ -9,12 +9,7 @@ export function userReducer(
 ): UserState {
 	switch (action.type) {
 		case login.type:
-			return {
-				isAuth: true,
-				name: action.payload.name,
-				email: action.payload.email,
-				token: action.payload.token,
-			};
+			return action.payload;
 		case logout.type:
 			return null;
 		default:

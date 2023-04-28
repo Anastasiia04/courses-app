@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'src/store/user/userActions';
 import { selectUser } from 'src/store/user/userSelector';
 import { clearUserToken } from '../../helpers/userData';
+import { logoutUser } from '../../store/user/thunk';
 
 export function Header() {
 	const user = useSelector(selectUser);
@@ -17,7 +18,7 @@ export function Header() {
 	const navigate = useNavigate();
 
 	const logoutHandler = () => {
-		dispatch(logout(user));
+		logoutUser()(dispatch);
 		clearUserToken();
 		navigate(ROUTES.login);
 	};

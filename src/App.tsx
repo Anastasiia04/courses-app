@@ -21,6 +21,7 @@ import { configureStore } from './store';
 import { selectUser } from './store/user/userSelector';
 import { useUser } from './hooks/useUser';
 import { UpdateCourse } from './components/UpdateCourse/UpdateCourse';
+import { PrivateRouter } from 'src/PrivateRouter/PrivateRouter';
 
 function App() {
 	const store = useMemo(() => {
@@ -37,8 +38,7 @@ function App() {
 }
 
 function AppInner() {
-	const user = useSelector(selectUser);
-	const loading = useUser();
+	const { loading, user } = useUser();
 	return (
 		<Router>
 			<Header />
@@ -49,10 +49,25 @@ function AppInner() {
 					{user ? (
 						<>
 							<Route path='/' element={<Navigate to={ROUTES.courses} />} />
-							<Route path={ROUTES.courses} element={<Courses />} />
 							<Route path={ROUTES.course} element={<CourseInfo />} />
 							<Route path={ROUTES.login} element={<Login />} />
-							<Route path={ROUTES.addCourse} element={<CreateCourse />} />
+							<Route path={ROUTES.courses} element={<Courses />} />
+							<Route
+								path={ROUTES.addCourse}
+								element={
+									<PrivateRouter>
+										<CreateCourse />
+									</PrivateRouter>
+								}
+							/>
+							<Route
+								path={ROUTES.updateCourse}
+								element={
+									<PrivateRouter>
+										<UpdateCourse />
+									</PrivateRouter>
+								}
+							/>
 							<Route path='*' element={<ErrorPage />} />
 						</>
 					) : (

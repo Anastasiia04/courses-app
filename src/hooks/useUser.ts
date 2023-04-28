@@ -1,42 +1,28 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { getUserToken, IUser } from '../helpers/userData';
-import { makeRequest } from '../helpers/makeRequest';
-import { USER } from '../constants';
-import { login, logout } from '../store/user/userActions';
-
-interface IUserResponse {
-	successful: boolean;
-	result: IUser;
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserToken } from '../helpers/userData';
+import { loadUser } from '../store/user/thunk';
+import { selectUser } from '../store/user/userSelector';
 
 export const useUser = () => {
 	const [loading, setLoading] = useState<boolean>(true);
+	const user = useSelector(selectUser);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const token = getUserToken();
-		if (token) {
-			makeRequest<IUserResponse>(USER, {
-				headers: {
-					Authorization: token,
-				},
-			}).then((resp) => {
-				if (resp.successful) {
-					const user = {
-						...resp.result,
-						token,
-					};
-					dispatch(login(user));
-				} else {
-					dispatch(logout(null));
-				}
-				setLoading(false);
-			});
-		} else {
+		if (!token) {
 			setLoading(false);
+		} else {
+			loadUser(token)(dispatch);
 		}
 	}, []);
 
-	return loading;
+	useEffect(() => {
+		if (user) {
+			setLoading(false);
+		}
+	}, [user]);
+
+	return { loading, user };
 };

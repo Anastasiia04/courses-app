@@ -11,6 +11,7 @@ import { Input } from '../../common/Input/Input';
 import { LOGIN_URL, ROUTES } from '../../constants';
 import { makeRequest } from '../../helpers/makeRequest';
 import { IUser, putUserToken } from '../../helpers/userData';
+import { loginUser } from '../../store/user/thunk';
 
 import './Login.scss';
 
@@ -62,15 +63,8 @@ export function Login() {
 		const response = await makeRequest<ILoginResponse>(LOGIN_URL, options);
 
 		if (response.successful) {
-			const user: IUser = {
-				name: response.user.name,
-				token: response.result,
-				isAuth: true,
-				email: response.user.email,
-			};
-			dispatch(login(user));
-			putUserToken(user);
-			navigate(ROUTES.courses);
+			loginUser(response.result)(dispatch);
+			putUserToken(response.result);
 		} else {
 			if (response.result) {
 				setErrors([response.result]);
